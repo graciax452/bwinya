@@ -1,103 +1,190 @@
-import Image from "next/image";
+"use client";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import QuizStep from "@/components/QuizStep";
+import { concerns } from "@/data/concerns";
+import { products } from "@/data/products";
+import { ProductCard } from "@/components/ProductCard";
 
-export default function Home() {
+export default function HomePage() {
+  // Main UI state
+  const [view, setView] = useState<"home" | "products">("home");
+  const [step, setStep] = useState(0);
+
+  // Quiz state
+  const [selectedConcern, setSelectedConcern] = useState<string | null>(null);
+  const [subAnswer, setSubAnswer] = useState<string | null>(null);
+
+  const currentConcern = concerns.find((c) => c.id === selectedConcern);
+
+  // Top 3 recommended masks for selected concern
+  const recommendedProducts = selectedConcern
+    ? products
+        .filter((p) => currentConcern?.maskIds.includes(p.id))
+        .slice(0, 3)
+    : [];
+
+  // Product detail state
+  const [selectedProduct, setSelectedProduct] = useState<number | null>(null);
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-[#faf9f7] text-gray-900">
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      {/* Hero Section */}
+      {view === "home" && step === 0 && (
+        <section className="flex flex-col items-center justify-center h-screen px-6 text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-5xl font-serif text-gray-800 mb-6"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+            Luxury Asian Facemasks
+          </motion.h1>
+          <p className="max-w-xl text-lg text-gray-600 mb-8">
+            Discover the timeless beauty rituals of Asia through elegant facemasks
+            crafted to meet your unique skin needs.
+          </p>
+          <div className="flex gap-4">
+            <Button
+              className="rounded-2xl px-6 py-3 text-lg"
+              onClick={() => setView("products")}
+            >
+              Shop Masks
+            </Button>
+            <Button
+              variant="outline"
+              className="rounded-2xl px-6 py-3 text-lg border-gray-400"
+              onClick={() => setStep(1)}
+            >
+              Find Your Match
+            </Button>
+          </div>
+        </section>
+      )}
+
+      {/* Quiz Section */}
+      {step > 0 && view === "home" && (
+        <section className="py-20 px-6 bg-white">
+          <div className="max-w-3xl mx-auto text-center">
+            {step === 1 && (
+              <QuizStep
+                question="What is your main skin concern?"
+                options={concerns.map((c) => ({ label: c.label, value: c.id }))}
+                onSelect={(val) => {
+                  setSelectedConcern(val);
+                  if (currentConcern?.subQuestions?.length) setStep(2);
+                  else setStep(3);
+                }}
+              />
+            )}
+
+            {step === 2 && currentConcern?.subQuestions && (
+              <QuizStep
+                question={currentConcern.subQuestions[0].question}
+                options={currentConcern.subQuestions[0].options}
+                onSelect={(val) => {
+                  setSubAnswer(val);
+                  setStep(3);
+                }}
+              />
+            )}
+
+            {step === 3 && recommendedProducts.length > 0 && (
+              <div className="mt-10">
+                <h2 className="text-4xl font-serif mb-8">Your Best Mask Matches</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {recommendedProducts.map((p) => (
+                    <ProductCard key={p.id} product={p} />
+                  ))}
+                </div>
+                <div className="mt-8">
+                  <Button
+                    variant="outline"
+                    className="rounded-2xl px-6 py-3"
+                    onClick={() => {
+                      setStep(0);
+                      setSelectedConcern(null);
+                      setSubAnswer(null);
+                    }}
+                  >
+                    ← Back to Home
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* Product Listing */}
+      {view === "products" && !selectedProduct && (
+        <section className="py-20 px-6 bg-white">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-4xl font-serif text-center mb-12">
+              Our Facemasks
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {products.map((product) => (
+                <Card
+                  key={product.id}
+                  className="hover:shadow-lg transition cursor-pointer"
+                  onClick={() => setSelectedProduct(product.id)}
+                >
+                  <CardContent className="p-6 text-center">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-48 object-cover rounded-xl mb-4"
+                    />
+                    <h3 className="text-xl font-medium mb-2">{product.name}</h3>
+                    <p className="text-gray-600 mb-2">{product.description}</p>
+                    <p className="text-gray-800 font-semibold">{product.price}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Product Detail */}
+      {view === "products" && selectedProduct && (
+        <section className="py-20 px-6 bg-white">
+          <div className="max-w-4xl mx-auto">
+            <Button
+              variant="outline"
+              className="mb-6"
+              onClick={() => setSelectedProduct(null)}
+            >
+              ← Back to Products
+            </Button>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <img
+                src={products.find((p) => p.id === selectedProduct)?.image}
+                alt={products.find((p) => p.id === selectedProduct)?.name}
+                className="w-full h-96 object-cover rounded-2xl"
+              />
+              <div>
+                <h2 className="text-3xl font-serif mb-4">
+                  {products.find((p) => p.id === selectedProduct)?.name}
+                </h2>
+                <p className="text-gray-600 mb-4">
+                  {products.find((p) => p.id === selectedProduct)?.description}
+                </p>
+                <p className="text-2xl font-semibold mb-6">
+                  {products.find((p) => p.id === selectedProduct)?.price}
+                </p>
+                <Button className="rounded-2xl px-6 py-3 text-lg">
+                  Add to Cart
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }
