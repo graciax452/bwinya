@@ -1,21 +1,21 @@
-// ProductCard.tsx
 "use client";
+
+import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Product } from "@/data/products";
 
-type Props = {
-  product: Product;
-  onAddToCart?: (product: Product) => void;
-};
+type Props = { product: Product; onAddToCart?: (product: Product) => void };
 
 export function ProductCard({ product, onAddToCart }: Props) {
   return (
     <Card className="hover:shadow-lg transition cursor-pointer">
       <CardContent className="p-6 text-center">
-        <img
+        <Image
           src={product.image}
           alt={product.name}
+          width={400}
+          height={400}
           className="w-full h-48 object-cover rounded-xl mb-4"
         />
         <h3 className="text-xl font-medium mb-2">{product.name}</h3>
@@ -23,7 +23,7 @@ export function ProductCard({ product, onAddToCart }: Props) {
         <p className="text-gray-800 font-semibold mb-4">{product.price}</p>
         <Button
           className="rounded-2xl px-6 py-2 text-lg"
-          onClick={() => onAddToCart?.(product)}
+          onClick={() => onAddToCart && onAddToCart(product)}
         >
           Add to Cart
         </Button>

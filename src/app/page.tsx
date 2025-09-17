@@ -10,6 +10,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import Head from "next/head";
+import Image from "next/image";
 
 export default function HomePage() {
   // ----- State -----
@@ -147,7 +148,7 @@ export default function HomePage() {
         <section id="about" className="py-20 px-6 bg-ivory max-w-6xl mx-auto">
           <h2 className="text-4xl font-serif text-center mb-8">About bwinya</h2>
           <p className="text-center max-w-3xl mx-auto text-lg leading-relaxed">
-            bwinya (a Shona word meaning <strong>"to glow"</strong>) celebrates timeless beauty rituals inspired by Asia and nourishing botanicals from Africa. 
+            bwinya (a Shona word meaning <strong>&quot;to glow&quot;</strong>) celebrates timeless beauty rituals inspired by Asia and nourishing botanicals from Africa. 
             Our masks are designed to enhance your natural radiance and bring ritualistic self-care into your daily life.
           </p>
         </section>
@@ -212,7 +213,14 @@ export default function HomePage() {
               <motion.div initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 50, opacity: 0 }} transition={{ duration: 0.3 }} className="bg-white rounded-3xl shadow-xl max-w-5xl w-full p-8 relative overflow-y-auto max-h-[90vh]">
                 {/* Modal Header */}
                 <div className="relative mb-4">
-                  <img src={headerImage} alt="Find Your Ritual" className="w-full h-48 object-cover rounded-2xl" />
+                  <Image
+                    src={headerImage}
+                    alt="Find Your Ritual"
+                    width={800}
+                    height={300}
+                    className="w-full h-48 object-cover rounded-2xl"
+                  />
+
                   <h2 className="absolute bottom-4 left-6 text-3xl sm:text-4xl font-serif text-white drop-shadow-lg">
                     {currentConcern ? `Your ${currentConcern.label} Ritual` : "Find Your Ritual"}
                   </h2>
@@ -226,7 +234,14 @@ export default function HomePage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     {concerns.map((c) => (
                       <div key={c.id} className="cursor-pointer rounded-2xl shadow hover:shadow-lg transition overflow-hidden bg-champagne" onClick={() => handlePickConcern(c.id)}>
-                        {c.image && <img src={c.image} alt={c.label} className="w-full h-48 object-cover" />}
+                        {c.image && <Image
+                                      src={c.image}
+                                      alt={c.label}
+                                      width={400}
+                                      height={300}
+                                      className="w-full h-48 object-cover"
+                                    />
+                        }
                         <div className="p-4 text-lg font-medium">{c.label}</div>
                       </div>
                     ))}
