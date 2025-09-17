@@ -4,6 +4,7 @@ export type Concern = {
   id: string;
   label: string;
   maskIds: number[];      // recommended products
+    image?: string;         // optional image for the concern
   subQuestions?: SubQuestion[];
 };
 
@@ -12,6 +13,7 @@ export const concerns: Concern[] = [
     id: "dryness",
     label: "Dryness",
     maskIds: [1, 6, 7],
+    image: "/images/concerns/1.jpg",
     subQuestions: [
       {
         id: "dryness-type",
@@ -45,6 +47,7 @@ export const concerns: Concern[] = [
     id: "dullness",
     label: "Dullness",
     maskIds: [2, 3, 6],
+    image: "/images/concerns/2.jpeg",
     subQuestions: [
       {
         id: "dullness-type",
@@ -68,6 +71,7 @@ export const concerns: Concern[] = [
     id: "acne",
     label: "Acne / Blemishes",
     maskIds: [3, 9],
+    image: "/images/concerns/3.jpg",
     subQuestions: [
         { id: "acne-type", question: "What type of acne do you have?", options: [ { label: "Whiteheads/Blackheads", value: "white-black-heads" }, { label: "Cystic", value: "cystic" }, { label: "Hormonal", value: "hormonal" } ] },
         { id: "acne-severity", question: "How severe is your acne?", options: [ { label: "Mild", value: "mild" }, { label: "Moderate", value: "moderate" }, { label: "Severe", value: "severe" } ] },
@@ -77,6 +81,7 @@ export const concerns: Concern[] = [
     id: "sensitivity",
     label: "Sensitivity",
     maskIds: [4, 10],
+    image: "/images/concerns/4.jpg",
     subQuestions: [ 
         { id: "sensitivity-trigger", question: "What triggers your sensitivity?", options: [ { label: "Redness", value: "redness" }, { label: "Irritation", value: "irritation" }, { label: "Dry patches", value: "dry-patches" } ] },
         { id: "sensitivity-frequency", question: "How often do you experience sensitivity?", options: [ { label: "Occasionally", value: "occasionally" }, { label: "Frequently", value: "frequently" }, { label: "Constantly", value: "constantly" } ] },
@@ -86,6 +91,7 @@ export const concerns: Concern[] = [
     id: "aging",
     label: "Anti-aging / Fine Lines",
     maskIds: [5, 8, 7],
+    image: "/images/concerns/1.jpg",
     subQuestions: [
         { id: "aging-concern", question: "What is your primary anti-aging concern?", options: [ { label: "Fine lines", value: "fine-lines" }, { label: "Loss of firmness", value: "loss-of-firmness" }, { label: "Dullness", value: "dullness" } ] },
         { id: "aging-prevention", question: "Are you looking for prevention or treatment?", options: [ { label: "Prevention", value: "prevention" }, { label: "Treatment", value: "treatment" } ] },

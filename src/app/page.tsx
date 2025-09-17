@@ -7,15 +7,14 @@ import QuizStep from "@/components/QuizStep";
 import { ProductCard } from "@/components/ProductCard";
 
 export default function HomePage() {
-  const [step, setStep] = useState(0); // 0 = hero, 1 = pick concern
+  const [step, setStep] = useState(0); // 0 = hero
   const [selectedConcern, setSelectedConcern] = useState<string | null>(null);
   const [answers, setAnswers] = useState<Record<string, string>>({});
 
   const currentConcern = concerns.find((c) => c.id === selectedConcern);
   const subQuestions = currentConcern?.subQuestions || [];
 
-  // step 2 = first sub-question
-  const subStepIndex = step - 2;
+  const subStepIndex = step - 2; // first sub-question
   const currentSubQuestion = subQuestions[subStepIndex];
 
   const recommendedProducts =
@@ -25,7 +24,6 @@ export default function HomePage() {
 
   const handlePickConcern = (concernId: string) => {
     setSelectedConcern(concernId);
-    // if concern has sub-questions → step 2, else → recommendations
     setStep(subQuestions.length ? 2 : subQuestions.length + 2);
   };
 
@@ -42,12 +40,12 @@ export default function HomePage() {
 
   const handleBack = () => {
     if (step === 1) {
-      setStep(0); // back to hero
+      setStep(0); // back to Hero
       setSelectedConcern(null);
     } else if (step === 2) {
       setStep(1); // back to concern picker
     } else if (step > 2) {
-      setStep(step - 1);
+      setStep(step - 1); // previous sub-question
     }
   };
 
@@ -67,35 +65,43 @@ export default function HomePage() {
         }}
       />
 
-
       {/* Quiz Section */}
       <section id="quiz" className="py-20 px-6 bg-white">
         <div className="max-w-3xl mx-auto text-center">
-          {/* Step 1: Concern Picker */}
+
+          {/* Step 1: Concern Picker with images */}
           {step === 1 && (
-            <QuizStep
-              question="What is your main skin concern?"
-              options={concerns.map((c) => ({ label: c.label, value: c.id }))}
-              onSelect={handlePickConcern}
-              onBack={handleBack}
-              step={1}
-              totalSteps={subQuestions.length + 1}
-            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {concerns.map((c) => (
+                <div
+                  key={c.id}
+                  className="cursor-pointer rounded-2xl shadow hover:shadow-lg transition overflow-hidden bg-champagne"
+                  onClick={() => handlePickConcern(c.id)}
+                >
+                  {c.image && (
+                    <img
+                      src={c.image}
+                      alt={c.label}
+                      className="w-full h-48 object-cover"
+                    />
+                  )}
+                  <div className="p-4 text-lg font-medium">{c.label}</div>
+                </div>
+              ))}
+            </div>
           )}
 
-          {/* Step 2+: Sub-questions */}
+          {/* Sub-questions */}
           {currentSubQuestion && (
             <QuizStep
               question={currentSubQuestion.question}
               options={currentSubQuestion.options}
               onSelect={handleAnswer}
               onBack={handleBack}
-              step={subStepIndex + 2}
-              totalSteps={subQuestions.length + 1}
             />
           )}
 
-          {/* Final: Recommendations */}
+          {/* Recommendations */}
           {recommendedProducts.length > 0 && (
             <div className="mt-10">
               <h2 className="text-4xl font-serif mb-8">Your Best Mask Matches</h2>
@@ -105,17 +111,14 @@ export default function HomePage() {
                 ))}
               </div>
               <button
-                className="mt-8 rounded-2xl px-6 py-3 border border-gray-400"
-                onClick={() => {
-                  setStep(0);
-                  setSelectedConcern(null);
-                  setAnswers({});
-                }}
+                className="mt-8 rounded-2xl px-6 py-3 border border-softgold text-foreground"
+                onClick={() => setStep(step - 1)}
               >
-                ← Back to Home
+                ← Back
               </button>
             </div>
           )}
+
         </div>
       </section>
 
@@ -130,6 +133,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
     </div>
   );
 }
