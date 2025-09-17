@@ -1,35 +1,44 @@
+// components/QuizStep.tsx
 "use client";
-import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
 
-type Option = {
-  label: string;
-  value: string;
-};
-
-type Props = {
+type Option = { label: string; value: string };
+type QuizStepProps = {
   question: string;
   options: Option[];
   onSelect: (value: string) => void;
+  onBack?: () => void;
+  step?: number;
+  totalSteps?: number;
 };
 
-export default function QuizStep({ question, options, onSelect }: Props) {
+export default function QuizStep({ question, options, onSelect, onBack, step, totalSteps }: QuizStepProps) {
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-      <h2 className="text-3xl font-serif mb-6">{question}</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="flex flex-col items-center justify-center min-h-screen px-6 text-center">
+      {step && totalSteps && (
+        <p className="mb-4 text-gray-500">
+          Step {step} of {totalSteps}
+        </p>
+      )}
+      <h2 className="text-3xl font-serif mb-8">{question}</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-3xl w-full">
         {options.map((opt) => (
-          <Card
+          <button
             key={opt.value}
-            className="cursor-pointer hover:shadow-xl transition"
             onClick={() => onSelect(opt.value)}
+            className="p-6 bg-white shadow-md rounded-xl hover:shadow-xl transition font-medium"
           >
-            <CardContent className="p-6">
-              <p className="text-lg font-medium">{opt.label}</p>
-            </CardContent>
-          </Card>
+            {opt.label}
+          </button>
         ))}
       </div>
-    </motion.div>
+      {onBack && (
+        <button
+          onClick={onBack}
+          className="mt-8 text-gray-500 hover:text-gray-800 transition"
+        >
+          ← Back
+        </button>
+      )}
+    </div>
   );
 }

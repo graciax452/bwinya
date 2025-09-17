@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #F8F6F0;
-  --foreground: #171717;
-  --accent: #1B4D3E;
-  --secondary: #F7E7CE;
-  --highlight: #E6CBA8;
-  --blush: #F5E4E2;
+  --background: #fcfaf8;   /* lighter ivory/eggshell */
+  --foreground: #2E2D2B;   /* softer dark brown-gray, not pure black */
+  --accent: #E6CBA8;       /* soft gold */
+  --secondary: #F7E7CE;    /* champagne */
+  --highlight: #FAF3E0;    /* warm off-white */
+  --blush: #F5E4E2;        /* blush pink */
 }
+
 
 body {
   background-color: var(--background);

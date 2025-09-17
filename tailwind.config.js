@@ -1,4 +1,6 @@
+// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: [
     "./src/app/**/*.{js,ts,jsx,tsx}",
@@ -8,20 +10,24 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        ivory: '#F8F6F0',
-        foreground: '#171717',
-        accent: '#1B4D3E',
-        champagne: '#F7E7CE',
-        softgold: '#E6CBA8',
-        blush: '#F5E4E2',
-        jade: '#1B4D3E',
-      },
-      fontFamily: {
-        serif: ["var(--font-playfair)", "'Cormorant Garamond'", 'serif'],
-        sans: ["var(--font-inter)", "'Lato'", 'Helvetica Neue', 'Arial', 'sans-serif'],
+        ivory: "#FFFCF9",
+        foreground: "#2E2D2B",
+        accent: "#E6CBA8",     // soft gold
+        champagne: "#F7E7CE",  // champagne beige
+        softgold: "#E6CBA8",   // same as accent
+        highlight: "#FAF3E0",  // warm off-white
+        blush: "#F5E4E2",      // soft pink
       },
     },
   },
+  safelist: [
+    "bg-gradient-to-r",
+    "from-accent",
+    "to-softgold",
+    "from-champagne",
+    "to-accent",
+    "hover:from-softgold",
+    "hover:to-champagne",
+  ],
   plugins: [],
-  safelist: ["bg-ivory", "text-foreground", "text-accent"], // ensures Tailwind generates them
 };
