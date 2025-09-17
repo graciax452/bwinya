@@ -1,11 +1,15 @@
+// ProductCard.tsx
 "use client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Product } from "@/data/products";
 
-type Props = { product: Product };
+type Props = {
+  product: Product;
+  onAddToCart?: (product: Product) => void;
+};
 
-export function ProductCard({ product }: Props) {
+export function ProductCard({ product, onAddToCart }: Props) {
   return (
     <Card className="hover:shadow-lg transition cursor-pointer">
       <CardContent className="p-6 text-center">
@@ -17,7 +21,12 @@ export function ProductCard({ product }: Props) {
         <h3 className="text-xl font-medium mb-2">{product.name}</h3>
         <p className="text-gray-600 mb-2">{product.description}</p>
         <p className="text-gray-800 font-semibold mb-4">{product.price}</p>
-        <Button className="rounded-2xl px-6 py-2 text-lg">Add to Cart</Button>
+        <Button
+          className="rounded-2xl px-6 py-2 text-lg"
+          onClick={() => onAddToCart?.(product)}
+        >
+          Add to Cart
+        </Button>
       </CardContent>
     </Card>
   );

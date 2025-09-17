@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
 export default function HeroSection({
   onExploreMasks,
@@ -9,50 +10,82 @@ export default function HeroSection({
   onFindRitual: () => void;
 }) {
   return (
-    <section
-      className="relative flex flex-col items-center justify-center h-screen px-6 text-center overflow-hidden"
-      style={{
-        background: "linear-gradient(135deg, #F7E7CE 0%, #FFFCF9 50%, #F5E4E2 100%)",
-      }}
-    >
-      <motion.h1
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="relative text-5xl sm:text-6xl md:text-7xl font-serif text-[#2E2D2B] mb-6 max-w-4xl leading-tight"
-      >
-        Timeless Beauty, Reimagined
-      </motion.h1>
+    <section className="relative flex flex-col items-center justify-center h-screen px-6 text-center overflow-hidden">
 
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.8 }}
-        className="relative max-w-2xl text-lg sm:text-xl text-[#5C5B59] mb-12"
-      >
-        Inspired by the timeless beauty rituals of Asia and the nourishing botanicals of Africa, each mask is crafted to enhance your natural radiance.
-      </motion.p>
+  {/* Background Image */}
+  <div
+    className="absolute inset-0 bg-cover bg-center z-0"
+    style={{ backgroundImage: "url('/images/hero/hero-bg3.jpg')" }}
+  />
 
-      <div className="flex flex-col sm:flex-row gap-6 z-10">
-        {/* Explore Masks Button with inline gradient */}
-        <button
-          onClick={onExploreMasks}
-          style={{
-            backgroundImage: "linear-gradient(to right, #F7E7CE, #E6CBA8)",
-          }}
-          className="inline-flex items-center justify-center font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none rounded-full px-10 py-4 text-lg text-[#2E2D2B] shadow-lg hover:opacity-90"
-        >
-          Explore Masks
-        </button>
+  {/* Neutral dark overlay for contrast */}
+  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/40 to-transparent z-0"></div>
 
-        {/* Find Your Ritual Button */}
-        <button
-          onClick={onFindRitual}
-          className="inline-flex items-center justify-center font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none rounded-full px-10 py-4 text-lg border border-[#E6CBA8] text-[#2E2D2B] bg-transparent hover:bg-[#F5E4E2]"
-        >
-          Find Your Ritual
-        </button>
-      </div>
-    </section>
+  {/* Content */}
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8 }}
+    className="relative z-10 max-w-4xl"
+  >
+    <h1 className="text-5xl sm:text-6xl md:text-7xl font-serif text-white mb-6 leading-tight">
+      Timeless Beauty, Reimagined
+    </h1>
+    <p className="text-lg sm:text-xl text-white/90 mb-12">
+      Inspired by the timeless beauty rituals of Asia and the nourishing botanicals of Africa, each mask is crafted to enhance your natural radiance.
+    </p>
+
+    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+  {/* Explore Masks */}
+  <button
+  style={{
+    background: "linear-gradient(90deg, #E6CBA8 0%, #F7E7CE 100%)",
+    color: "#2E2D2B",
+    borderRadius: "9999px",
+    padding: "1rem 3rem",
+    fontSize: "1.125rem",
+    fontWeight: 600,
+    boxShadow: "0 6px 18px rgba(0,0,0,0.15)",
+    transition: "all 0.3s ease",
+  }}
+  onMouseEnter={(e) => {
+    const btn = e.currentTarget as HTMLButtonElement;
+    btn.style.background = "transparent";
+    btn.style.color = "#FFFFFF";
+    btn.style.border = "2px solid #E6CBA8";
+  }}
+  onMouseLeave={(e) => {
+    const btn = e.currentTarget as HTMLButtonElement;
+    btn.style.background = "linear-gradient(90deg, #E6CBA8 0%, #F7E7CE 100%)";
+    btn.style.color = "#2E2D2B";
+    btn.style.border = "none";
+  }}
+  onClick={onExploreMasks}
+>
+  Explore Masks
+</button>
+
+
+  {/* Find Your Ritual */}
+  <button
+    className="rounded-full px-12 py-4 text-lg font-semibold 
+               text-white border-2 border-[#E6CBA8] bg-transparent 
+               transition duration-300 
+               hover:bg-gradient-to-r hover:from-[#E6CBA8] hover:to-[#F7E7CE] hover:text-[#2E2D2B] 
+               focus:outline-none"
+    onClick={onFindRitual}
+  >
+    Find Your Ritual
+  </button>
+</div>
+
+
+
+
+
+  </motion.div>
+</section>
+
+
   );
 }

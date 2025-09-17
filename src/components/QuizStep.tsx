@@ -13,7 +13,7 @@ type QuizStepProps = {
 
 export default function QuizStep({ question, options, onSelect, onBack, step, totalSteps }: QuizStepProps) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-6 text-center">
+    <div className="flex flex-col items-center justify-center  px-6 text-center">
       {step && totalSteps && (
         <p className="mb-4 text-gray-500">
           Step {step} of {totalSteps}
